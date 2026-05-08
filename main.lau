@@ -1,0 +1,40 @@
+varol width = 5
+varol height = 5
+
+drone.useItem(Enum.Gear.Sprinkler)
+
+task.wait(0.5)
+
+while true do
+
+    for row = 1, height do
+        for col = 1, width do
+
+            if drone.canHarvest() then
+                drone.harvest()
+            end
+
+            if col < width then
+                drone.move(Enum.Direction.West)
+            end
+
+            task.wait(0.1)
+        end
+
+        if row < height then
+            drone.move(Enum.Direction.South)
+        end
+    end
+
+    for rowBack = 1, height - 1 do
+        drone.move(Enum.Direction.North)
+    end
+
+    for colBack = 1, width - 1 do
+        drone.move(Enum.Direction.East)
+    end
+
+    market.sellAllItem()
+
+    task.wait(0.5)
+end
